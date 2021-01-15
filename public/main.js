@@ -1,7 +1,6 @@
-var img, video, screenshot, download;
+var img, video, screenshot;
 var enable = false;
 const canvas = document.createElement('canvas');
-var format = '.png'
 
 const init = () => {
     hasGetUserMedia()
@@ -17,9 +16,7 @@ const init = () => {
 
         video = document.getElementsByTagName('video')[0];
 
-        download = document.getElementsByClassName('download')[0]
-        download.addEventListener('click', onDownload)
-        download.disabled = true
+        data = document.getElementById('data');
 
 
 
@@ -54,23 +51,25 @@ const onScreenshot = () => {
     video.srcObject.getVideoTracks().forEach(track => track.stop())
     video.style.display = 'none'
 
-    img.src = canvas.toDataURL('image/png');
+    img.src = canvas.toDataURL('image/png',0.01);
     img.style.display = 'block'
-    download.disabled = false
     screenshot.disabled=true
 
+
+  // envoi de 'image au serveur'
+    var data={
+       name: "image from client",
+       img: img.src
+
+    }
+
+    var xmlHttp=new XMLHttpRequest();
+    xmlHttp.open("POST", "submit_response");
+    xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xmlHttp.send(JSON.stringify(data));
+    console.log("sent")
+
+
 }
-
-
-const onDownload = () => {
-    download = document.createElement('a');
-    download.href = img.src
-    download.download = 'yourScreenshot' + format;
-    download.style.display = 'none';undefined
-    document.body.appendChild(download);
-    download.click();
-    document.body.removeChild(download);
-};
-
 
 document.addEventListener('DOMContentLoaded', init)
