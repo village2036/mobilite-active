@@ -5,11 +5,10 @@ Application web permettant de rendre visible les entraves à la mobilité.
 
 # Installation
 
-Actuellement limité à une prise de photo en local:
+Actuellement limité à envoie d'une photo au serveur
 
-    browser index.html
+    ## serveur
+    node app.js
 
-# Inspirations
-
-  - https://medium.com/@alexander.wilson_33085/handling-audio-files-with-javascript-dd04ea82e04f
-  - https://medium.com/hackernoon/implementing-a-websocket-server-with-node-js-d9b78ec5ffa8
+    ## client
+    browser localhost:3000
